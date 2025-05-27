@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starlight Buyee</title>
+
+  <!-- Fuente DynaPuff -->
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background-image: url('https://i.pinimg.com/originals/41/72/ab/4172ab9e2a618a5f12d1c30a3e709d6e.gif');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      font-family: 'DynaPuff', cursive;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      box-sizing: border-box;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Logo */
+    .logo {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: -20px auto 10px;
+    }
+
+    /* Quitar flechitas del input number */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    /* Cambiar color del placeholder */
+    .input-usd::placeholder {
+      color: #b3b3b3;
+      opacity: 1;
+    }
+
+    /* Estilos personalizados por texto */
+    .texto-bienvenida {
+      font-size: 40px;
+      color: #fe95f6;
+      text-shadow: 2px 2px 2px #c443e9;
+      margin-bottom: 10px;
+      margin-top: 6px;
+    }
+
+    .titulo-principal {
+      font-size: 50px;
+      color: #ffe4f8;
+      text-shadow: 1px 1px 1px #c443e9;
+      margin: 0px 0px 10px 0px;
+      margin-bottom: 0px;
+    }
+
+    .input-usd {
+      padding: 15px;
+      font-size: 20px;
+      margin: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: 'DynaPuff', cursive;
+      margin-top: -20px;
+    }
+
+    .boton-cotizar {
+      background-color: #fe95f6;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      font-family: 'DynaPuff', cursive;
+      border-radius: 10px;
+    }
+
+    .boton-cotizar:hover {
+      background-color: #d86bdc;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-size: 35px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      display: none;
+      color: #fe95f6;
+      text-shadow: 1px 1px 1px #c443e9;
+    }
+
+    /* Sección para texto inválido: color, tamaño y sombra separados */
+    .resultado.error {
+      color: #b6d5f0;              /* Color rojo para error */
+      font-size: 24px;             /* Tamaño más pequeño para error */
+      text-shadow: 1px 1px 3px #2c3e66; /* Sombra específica para error */
+      font-weight: normal;         /* Opcional: peso normal */
+    }
+
+    #aclaracion {
+      font-size: 20px;
+      margin-top: 0px;
+      color: #b6d5f0;
+      display: none;
+      text-shadow: 1px 1px 1px #2c3e66;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        max-width: 300px;
+        padding: 10px;
+      }
+
+      .logo {
+        max-width: 150px;
+      }
+
+      .texto-bienvenida {
+        font-size: 20px;
+      }
+
+      .titulo-principal {
+        font-size: 25px;
+        margin-bottom: 12px;
+      }
+
+      .resultado {
+        font-size: 18px;
+      }
+
+      .resultado.error {
+        font-size: 16px;
+      }
+
+      #aclaracion {
+        font-size: 12px;
+      }
+
+      .input-usd,
+      .boton-cotizar {
+        font-size: 18px;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <p class="texto-bienvenida">¡BIENVENIDOS! </p>
+    <p class="titulo-principal">✩ STARLIGHT BUYEE ✩</p>
+    <img src="https://i.imgur.com/6L20Wof.png" alt="logo" class="logo" />
+
+    <input type="number" id="usd" class="input-usd" placeholder="Escribe el valor en USD" />
+    <button onclick="calcular()" class="boton-cotizar">Cotizar</button>
+
+    <div class="resultado" id="resultado"></div>
+    <p id="aclaracion"></p>
+  </div>
+
+  <script>
+    function calcular() {
+      // Aquí seleccionamos el texto ¡BIENVENIDOS! para modificar sus márgenes
+      const bienvenida = document.querySelector('.texto-bienvenida');
+      bienvenida.style.marginTop = "30px";
+      bienvenida.style.marginBottom = "10px";
+
+      const dolar = 1300;
+      const fee = 2.30;
+      const inputUSD = parseFloat(document.getElementById("usd").value);
+      const resultado = document.getElementById("resultado");
+      const aclaracion = document.getElementById("aclaracion");
+
+      if (isNaN(inputUSD)) {
+        resultado.classList.add("error");     // Agrega clase error para el estilo específico
+        resultado.style.display = "block";
+        resultado.innerText = "Texto inválido, por favor ingresa solo el número.";
+        aclaracion.style.display = "none";
+        return;
+      } else {
+        resultado.classList.remove("error");  // Quita clase error si no hay error
+      }
+
+      const totalUSD = inputUSD + fee;
+      const totalARS = totalUSD * dolar;
+
+      resultado.innerText = `VALOR: $${totalARS.toLocaleString('es-AR')}`;
+      aclaracion.innerText = "PRECIO FINAL, ya contiene el fees correspondiente.";
+
+      resultado.style.display = "block";
+      aclaracion.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
