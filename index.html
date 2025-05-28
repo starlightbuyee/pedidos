@@ -127,6 +127,8 @@
     .resultado.error {
       color: #ffffff;              /* Color rojo para error */
       font-size: 24px;             /* Tamaño más pequeño para error */
+      -webkit-text-stroke-width: 0.3px;   /* Aumentado */
+      -webkit-text-stroke-color: #8fe3ff;
       text-shadow: 1px 1px 3px #8fe3ff; /* Sombra específica para error */
       font-weight: normal;         /* Opcional: peso normal */
     }
@@ -166,6 +168,7 @@
       
       .resultado {
         font-size: 28px;
+        margin-bottom: 10px;
       }
 
       .resultado.error {
@@ -224,7 +227,7 @@
       const totalUSD = inputUSD + fee;
       const totalARS = totalUSD * dolar;
 
-      resultado.innerText = `VALOR: $${totalARS.toLocaleString('es-AR')}`;
+      resultado.innerText = `TOTAL: $${totalARS.toLocaleString('es-AR')}`;
       aclaracion.innerText = "PRECIO FINAL, ya contiene el fees correspondiente.";
 
       resultado.style.display = "block";
